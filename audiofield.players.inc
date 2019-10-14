@@ -61,7 +61,7 @@ function audiofield_players() {
     'filetypes' => array('mp3'),
     'callback' => 'audiofield_premium_beat_mini',
   );
-  
+
 	$players['flowplayer'] = array(
       'name' => 'Flowplayer',
       'download_link' => 'http://drupal.org/project/flowplayer',
@@ -71,13 +71,37 @@ function audiofield_players() {
     );
 
 
-  $players['soundmanager2'] = array(
-    'path' => $players_dir . "/soundmanager2",
-    'name' => 'SoundManager2 360',
-    'download_link' => 'http://www.schillmania.com/projects/soundmanager2/',
-    'filetypes' => array('mp3', 'wav'),
-    'callback' => 'audiofield_soundmanager2',
-  );
+    $players['soundmanager2_360'] = array(
+      'path' => $players_dir . "/soundmanager2",
+      'name' => 'SoundManager2 360',
+      'download_link' => 'http://www.schillmania.com/projects/soundmanager2/',
+      'filetypes' => array('mp3', 'wav'),
+      'callback' => 'audiofield_soundmanager2_360',
+    );
+
+    $players['soundmanager2_barui'] = array(
+      'path' => $players_dir . "/soundmanager2",
+      'name' => 'SoundManager2 BarUI',
+      'download_link' => 'http://www.schillmania.com/projects/soundmanager2/',
+      'filetypes' => array('mp3', 'wav'),
+      'callback' => 'audiofield_soundmanager2_barui',
+    );
+
+    $players['soundmanager2_button'] = array(
+      'path' => $players_dir . "/soundmanager2",
+      'name' => 'SoundManager2 Button',
+      'download_link' => 'http://www.schillmania.com/projects/soundmanager2/',
+      'filetypes' => array('mp3', 'wav'),
+      'callback' => 'audiofield_soundmanager2_button',
+    );
+
+    $players['soundmanager2_inline'] = array(
+      'path' => $players_dir . "/soundmanager2",
+      'name' => 'SoundManager2 Inline',
+      'download_link' => 'http://www.schillmania.com/projects/soundmanager2/',
+      'filetypes' => array('mp3', 'wav'),
+      'callback' => 'audiofield_soundmanager2_inline',
+    );
 
     $players['jplayer'] = array(
       'path' => $players_dir . "/jplayer/jquery.jplayer.min.js",
@@ -150,7 +174,7 @@ function audiofield_xspf_slim($player_path, $audio_file, $options) {
 	$song_title = "XSPF Slim Music Player";
 	if(!empty($options)) {
 		if(!empty($options['items'][0]['filename'])) {
-			$song_title = $options['items'][0]['filename'];	
+			$song_title = $options['items'][0]['filename'];
 		}
 	}
   $variables = array(
@@ -243,7 +267,7 @@ function theme_audiofield_players_premium_beat_mini($variables) {
         </embed></object>';
 }
 
-function audiofield_soundmanager2($player_path, $audio_file) {
+function audiofield_soundmanager2_360($player_path, $audio_file) {
   static $instanceIndex = 0;
   if ($audio_file == '') {
     return t('HTML5 media player for soundmanager2 (skin 360-player)');
@@ -268,6 +292,190 @@ function audiofield_soundmanager2($player_path, $audio_file) {
     	<div id="sm2-container-real" class="ui360">
 		<a href="' . $audio_file . '"></a>
     	</div>
+    <script type="text/javascript">
+
+    soundManager.url = "' . $player_path . '/swf"; // directory where SM2 .SWFs live
+    soundManager.useFastPolling = true; // increased JS callback frequency, combined with useHighPerformance = true
+    soundManager.waitForWindowLoad = true;
+
+    //so Firefox and others without MP3 support work
+    soundManager.preferFlash = true;
+
+    // disable debug mode after development/testing..
+    //soundManager.debugMode = true;
+    soundManager.onready(function () {
+      soundManager.stopAll();
+      threeSixtyPlayer.init();
+    });
+    </script>';
+  }
+}
+
+function audiofield_soundmanager2_barui($player_path, $audio_file) {
+  static $instanceIndex = 0;
+  if ($audio_file == '') {
+    return t('HTML5 media player for soundmanager2 (skin BarUI-player)');
+  }
+  else {
+    $instanceIndex += 1;
+    $player_base_path = config_get('audiofield.settings', 'players_dir') . "/soundmanager2";
+    $ie_js = array(
+      '#type' => 'markup',
+      '#markup' => '<!--[if IE]><script type="text/javascript" src="' . $player_path . '/demo/360-player/script/excanvas.js"></script><![endif]-->',
+    );
+    backdrop_add_html_head($ie_js, 'audiofield');
+
+    backdrop_add_js($player_base_path . '/script/soundmanager2.js', array('weight' => 0));
+
+    //barui viewer
+    backdrop_add_js($player_base_path . '/demo/bar-ui/script/bar-ui.js', array('weight' => 1));
+    backdrop_add_css($player_base_path . '/demo/bar-ui/css/bar-ui.css');
+
+    return '
+    <div class="sm2-bar-ui">
+      <div class="bd sm2-main-controls">
+        <div class="sm2-inline-texture"></div>
+        <div class="sm2-inline-gradient"></div>
+        <div class="sm2-inline-element sm2-button-element">
+          <div class="sm2-button-bd">
+            <a href="#play" class="sm2-inline-button sm2-icon-play-pause">Play / pause</a>
+          </div>
+        </div>
+        <div class="sm2-inline-element sm2-inline-status">
+          <div class="sm2-playlist">
+            <div class="sm2-playlist-target"><noscript><p>JavaScript is required.</p></noscript></div>
+          </div>
+          <div class="sm2-progress">
+            <div class="sm2-row">
+              <div class="sm2-inline-time">0:00</div>
+              <div class="sm2-progress-bd">
+                <div class="sm2-progress-track">
+                  <div class="sm2-progress-bar"></div>
+                  <div class="sm2-progress-ball"><div class="icon-overlay"></div></div>
+                </div>
+              </div>
+              <div class="sm2-inline-duration">0:00</div>
+            </div>
+          </div>
+        </div>
+        <div class="sm2-inline-element sm2-button-element sm2-volume">
+          <div class="sm2-button-bd">
+            <span class="sm2-inline-button sm2-volume-control volume-shade"></span>
+            <a href="#volume" class="sm2-inline-button sm2-volume-control">volume</a>
+          </div>
+        </div>
+        <div class="sm2-inline-element sm2-button-element sm2-menu">
+          <div class="sm2-button-bd">
+            <a href="#menu" class="sm2-inline-button sm2-icon-menu">menu</a>
+          </div>
+        </div>
+      </div>
+      <div class="bd sm2-playlist-drawer sm2-element">
+        <div class="sm2-playlist-wrapper">
+          <ul class="sm2-playlist-bd">
+              <li>
+                <a href="' . $audio_file . '">' . basename($audio_file) . '</a>
+              </li>
+          </ul>
+        </div>
+        <div class="sm2-extra-controls">
+          <div class="bd">
+            <div class="sm2-inline-element sm2-button-element">
+              <a href="#prev" title="Previous" class="sm2-inline-button previous">&lt; previous</a>
+            </div>
+            <div class="sm2-inline-element sm2-button-element">
+              <a href="#next" title="Next" class="sm2-inline-button next">&gt; next</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+
+    soundManager.url = "' . $player_path . '/swf"; // directory where SM2 .SWFs live
+    soundManager.useFastPolling = true; // increased JS callback frequency, combined with useHighPerformance = true
+    soundManager.waitForWindowLoad = true;
+
+    //so Firefox and others without MP3 support work
+    soundManager.preferFlash = true;
+
+    // disable debug mode after development/testing..
+    //soundManager.debugMode = true;
+    soundManager.onready(function () {
+      soundManager.stopAll();
+      threeSixtyPlayer.init();
+    });
+    </script>';
+  }
+}
+
+function audiofield_soundmanager2_button($player_path, $audio_file) {
+  static $instanceIndex = 0;
+  if ($audio_file == '') {
+    return t('HTML5 media player for soundmanager2 (skin Button-player)');
+  }
+  else {
+    $instanceIndex += 1;
+    $player_base_path = config_get('audiofield.settings', 'players_dir') . "/soundmanager2";
+    $ie_js = array(
+      '#type' => 'markup',
+      '#markup' => '<!--[if IE]><script type="text/javascript" src="' . $player_path . '/demo/360-player/script/excanvas.js"></script><![endif]-->',
+    );
+    backdrop_add_html_head($ie_js, 'audiofield');
+
+    backdrop_add_js($player_base_path . '/script/soundmanager2.js', array('weight' => 0));
+
+    //mp3 player button viewer
+    backdrop_add_js($player_base_path . '/demo/mp3-player-button/script/mp3-player-button.js', array('weight' => 1));
+    backdrop_add_css($player_base_path . '/demo/mp3-player-button/css/mp3-player-button.css');
+
+    return '
+    	<div id="sm2-container-real" class="sm2-button">
+		<a href="' . $audio_file . '">' . basename($audio_file) . '</a>
+    	</div>
+    <script type="text/javascript">
+
+    soundManager.url = "' . $player_path . '/swf"; // directory where SM2 .SWFs live
+    soundManager.useFastPolling = true; // increased JS callback frequency, combined with useHighPerformance = true
+    soundManager.waitForWindowLoad = true;
+
+    //so Firefox and others without MP3 support work
+    soundManager.preferFlash = true;
+
+    // disable debug mode after development/testing..
+    //soundManager.debugMode = true;
+    soundManager.onready(function () {
+      soundManager.stopAll();
+      threeSixtyPlayer.init();
+    });
+    </script>';
+  }
+}
+
+function audiofield_soundmanager2_inline($player_path, $audio_file) {
+  static $instanceIndex = 0;
+  if ($audio_file == '') {
+    return t('HTML5 media player for soundmanager2 (skin Inline-player)');
+  }
+  else {
+    $instanceIndex += 1;
+    $player_base_path = config_get('audiofield.settings', 'players_dir') . "/soundmanager2";
+    $ie_js = array(
+      '#type' => 'markup',
+      '#markup' => '<!--[if IE]><script type="text/javascript" src="' . $player_path . '/demo/360-player/script/excanvas.js"></script><![endif]-->',
+    );
+    backdrop_add_html_head($ie_js, 'audiofield');
+
+    backdrop_add_js($player_base_path . '/script/soundmanager2.js', array('weight' => 0));
+
+    //mp3 player button viewer
+    backdrop_add_js($player_base_path . '/demo/play-mp3-links/script/inlineplayer.js', array('weight' => 1));
+    backdrop_add_css($player_base_path . '/demo/play-mp3-links/css/inlineplayer.css');
+
+    return '
+    	<ul class="graphic">
+		<li><a href="' . $audio_file . '">' . basename($audio_file) . '</a></li>
+    	</ul>
     <script type="text/javascript">
 
     soundManager.url = "' . $player_path . '/swf"; // directory where SM2 .SWFs live
