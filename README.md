@@ -29,7 +29,9 @@ Installation
   Flowplayer. Or, install jPlayer module (http://drupal.org/project/jplayer) to
   use jPlayer.
 
-  Create a new folder called "player" under the directory "sites/all/libraries".
+  If the "libraries" folder does not exit, create it.
+  
+  Create a new folder called "player" under the directory "libraries".
   Unzip the audio players directly into the "player" folder.
 
   The resulting folder structure should resemble the following (you may need to
