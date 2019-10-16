@@ -108,7 +108,7 @@ function audiofield_field_widget_form(&$form, &$form_state, $field, $instance, $
  */
 function audiofield_field_widget_process($element, &$form_state, $form) {
   $fid = isset($element['#value']['fid']) ? $element['#value']['fid'] : 0;
-
+  
   $item = $element['#value'];
   $item['fid'] = $element['fid']['#value'];
   $field = field_widget_field($element, $form_state);
@@ -138,7 +138,7 @@ function audiofield_field_widget_process($element, &$form_state, $form) {
       '#weight' => -10,
     );
   }
-
+  
   // Add the description field if enabled.
   if (!empty($instance['settings']['description_field']) && $item['fid']) {
     $element['description'] = array(
@@ -179,14 +179,12 @@ TODO: Can implement playlists to group audios hold in multiple valued fields
 function audiofield_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
   $elements = array();
 
-  $playlist = (count($items) > 1) ? true : false;
-
   switch ($display['type']) {
     case 'audiofield_embedded' :
     case 'audiofield_nodownload':
       global $user;
       foreach ($items as $delta => $item) {
-        $audiofile[] = file_create_url($item['uri']);
+        $audiofile = file_create_url($item['uri']);
         $info = pathinfo($item['uri']);
         $op = $info['extension'];
         $options = array(
@@ -209,11 +207,9 @@ function audiofield_field_formatter_view($entity_type, $entity, $field, $instanc
             $download_link .= '<div class="audio-download"><b>' . t('Download') . ':</b>' . theme('file_link', array('file' => (object) $item)) . '</div>';
           }
         }
-        if !$playlist { $elements[] = array('#markup' => audiofield_get_player($audiofile, $op, $options).$download_link); }
+        $elements[] = array('#markup' => audiofield_get_player($audiofile, $op, $options).$download_link);
       }
       break;
-
-      if $playlist { $elements[] = array('#markup' => audiofield_get_player($audiofile, $op, $options).$download_link); }
   }
 
   return $elements;

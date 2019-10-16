@@ -75,7 +75,7 @@ function audiofield_players() {
       'path' => $players_dir . "/soundmanager2",
       'name' => 'SoundManager2 360',
       'download_link' => 'http://www.schillmania.com/projects/soundmanager2/',
-      'filetypes' => array('mp3', 'wav'),
+      'filetypes' => array('mp3', 'mp4', 'aac', 'ogg', 'flac', 'wav'),
       'callback' => 'audiofield_soundmanager2_360',
     );
 
@@ -83,7 +83,7 @@ function audiofield_players() {
       'path' => $players_dir . "/soundmanager2",
       'name' => 'SoundManager2 BarUI',
       'download_link' => 'http://www.schillmania.com/projects/soundmanager2/',
-      'filetypes' => array('mp3', 'wav'),
+      'filetypes' => array('mp3', 'mp4', 'aac', 'ogg', 'flac', 'wav'),
       'callback' => 'audiofield_soundmanager2_barui',
     );
 
@@ -91,7 +91,7 @@ function audiofield_players() {
       'path' => $players_dir . "/soundmanager2",
       'name' => 'SoundManager2 Button',
       'download_link' => 'http://www.schillmania.com/projects/soundmanager2/',
-      'filetypes' => array('mp3', 'wav'),
+      'filetypes' => array('mp3', 'mp4', 'aac', 'ogg', 'flac', 'wav'),
       'callback' => 'audiofield_soundmanager2_button',
     );
 
@@ -99,7 +99,7 @@ function audiofield_players() {
       'path' => $players_dir . "/soundmanager2",
       'name' => 'SoundManager2 Inline',
       'download_link' => 'http://www.schillmania.com/projects/soundmanager2/',
-      'filetypes' => array('mp3', 'wav'),
+      'filetypes' => array('mp3', 'mp4', 'aac', 'ogg', 'flac', 'wav'),
       'callback' => 'audiofield_soundmanager2_inline',
     );
 
@@ -474,7 +474,7 @@ function audiofield_soundmanager2_inline($player_path, $audio_file) {
 
     return '
     	<ul class="graphic">
-		<li><a href="' . $audio_file . '">' . basename($audio_file) . '</a></li>
+		<li><a href="' . $audio_file . '">' . str_replace("_", " ", basename($audio_file)) . '</a></li>
     	</ul>
     <script type="text/javascript">
 
