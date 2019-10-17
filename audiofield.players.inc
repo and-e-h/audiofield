@@ -389,23 +389,7 @@ function audiofield_soundmanager2_barui($player_path, $audio_file) {
           </div>
         </div>
       </div>
-    </div>
-    <script type="text/javascript">
-
-    soundManager.url = "' . $player_path . '/swf"; // directory where SM2 .SWFs live
-    soundManager.useFastPolling = true; // increased JS callback frequency, combined with useHighPerformance = true
-    soundManager.waitForWindowLoad = true;
-
-    //so Firefox and others without MP3 support work
-    soundManager.preferFlash = true;
-
-    // disable debug mode after development/testing..
-    //soundManager.debugMode = true;
-    soundManager.onready(function () {
-      soundManager.stopAll();
-      threeSixtyPlayer.init();
-    });
-    </script>';
+    </div>';
   }
 }
 
@@ -432,23 +416,7 @@ function audiofield_soundmanager2_button($player_path, $audio_file) {
     return '
     	<div id="sm2-container-real" class="sm2-button">
 		<a href="' . $audio_file . '">' . basename($audio_file) . '</a>
-    	</div>
-    <script type="text/javascript">
-
-    soundManager.url = "' . $player_path . '/swf"; // directory where SM2 .SWFs live
-    soundManager.useFastPolling = true; // increased JS callback frequency, combined with useHighPerformance = true
-    soundManager.waitForWindowLoad = true;
-
-    //so Firefox and others without MP3 support work
-    soundManager.preferFlash = true;
-
-    // disable debug mode after development/testing..
-    //soundManager.debugMode = true;
-    soundManager.onready(function () {
-      soundManager.stopAll();
-      threeSixtyPlayer.init();
-    });
-    </script>';
+    	</div>';
   }
 }
 
@@ -475,23 +443,7 @@ function audiofield_soundmanager2_inline($player_path, $audio_file) {
     return '
     	<ul class="graphic">
 		<li><a href="' . $audio_file . '">' . str_replace("_", " ", basename($audio_file)) . '</a></li>
-    	</ul>
-    <script type="text/javascript">
-
-    soundManager.url = "' . $player_path . '/swf"; // directory where SM2 .SWFs live
-    soundManager.useFastPolling = true; // increased JS callback frequency, combined with useHighPerformance = true
-    soundManager.waitForWindowLoad = true;
-
-    //so Firefox and others without MP3 support work
-    soundManager.preferFlash = true;
-
-    // disable debug mode after development/testing..
-    //soundManager.debugMode = true;
-    soundManager.onready(function () {
-      soundManager.stopAll();
-      threeSixtyPlayer.init();
-    });
-    </script>';
+    	</ul>';
   }
 }
 
