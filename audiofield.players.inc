@@ -374,7 +374,7 @@ function audiofield_soundmanager2_barui($player_path, $audio_file) {
         <div class="sm2-playlist-wrapper">
           <ul class="sm2-playlist-bd">
               <li>
-                <a href="' . $audio_file . '">' . basename($audio_file) . '</a>
+                <a href="' . $audio_file . '">' . str_replace("_", " ", basename($audio_file)) . '</a>
               </li>
           </ul>
         </div>
@@ -415,7 +415,7 @@ function audiofield_soundmanager2_button($player_path, $audio_file) {
 
     return '
     	<div id="sm2-container-real" class="sm2-button">
-		<a href="' . $audio_file . '">' . basename($audio_file) . '</a>
+		<a href="' . $audio_file . '">' . str_replace("_", " ", basename($audio_file)) . '</a>
     	</div>';
   }
 }
